@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>रवि – एडमिन पैनल</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<style>
+:root{--bg:#f5f9f5;--c:#fff;--ink:#17261c;--m:#5b6b60;--g:#1f6b3a;--l:#dfe9e0;--r:#c93a1f;--y:#f2b01e;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1a12;--c:#16261b;--ink:#eaf3ec;--m:#9db1a3;--g:#4fb36f;--l:#2a4032}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Noto Sans Devanagari",sans-serif}
+.w{max-width:760px;margin:0 auto;padding:12px}
+nav{display:flex;gap:6px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5;overflow-x:auto}
+button,select,input,textarea{font:inherit;color:var(--ink)}
+.b{border:0;border-radius:10px;min-height:44px;padding:0 14px;background:var(--g);color:#fff;font-weight:600;cursor:pointer}
+.b.o{background:none;color:var(--ink);border:1.5px solid var(--l)}.b.d{background:var(--r)}.b.s{min-height:38px;padding:0 10px}
+nav .b{white-space:nowrap}nav .b.o[aria-pressed=true]{background:var(--g);color:#fff;border-color:var(--g)}
+.k{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:12px;margin:10px 0}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g .k{margin:0}.g b{font-size:22px;display:block}
+.note{color:var(--m);font-size:13px}
+input,select,textarea{width:100%;height:44px;border:1.5px solid var(--l);border-radius:10px;padding:0 10px;background:var(--bg);margin:3px 0 8px}
+label{font-size:14px;color:var(--m)}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
+.ck{display:flex;gap:8px;align-items:center}.ck input{width:22px;height:22px;margin:0;flex:none}
+.im{width:56px;height:56px;border-radius:10px;object-fit:cover;background:var(--l);flex:none}
+.st{display:inline-block;border-radius:99px;padding:0 10px;font-size:13px;background:var(--l)}
+.err{color:var(--r)}dialog{width:min(480px,94vw);border:0;border-radius:16px;background:var(--c);color:var(--ink)}
+dialog::backdrop{background:#0008}.sm input{height:38px;margin:0}
+</style></head><body><div class="w" id="app"><p>लोड हो रहा है…</p></div>
+<dialog id="dlg"></dialog>
+<script>
+// ===== CONFIG: paste from Supabase > Project Settings > API (anon/public key only, never service_role) =====
+const SUPABASE_URL="https://dcvkrmfrehbobckzabuw.supabase.co", SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjdmtybWZyZWhib2Jja3phYnV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2MTQzMjIsImV4cCI6MjEwNzE5MDMyMn0.SMwVpxNKlN9AAlBs5cqJdoitFUI5CNqde_BHJOxfQis";
+const ST={new:"नया ऑर्डर",confirmed:"ऑर्डर कन्फर्म",preparing:"तैयारी जारी",out_for_delivery:"डिलीवरी के लिए निकला",delivered:"डिलीवर हो गया",cancelled:"कैंसल"};
+const NEXT={confirmed:"preparing",preparing:"out_for_delivery",out_for_delivery:"delivered"};
+const $=s=>document.querySelector(s),A=$("#app"),rs=n=>"₹"+(Math.round(n*100)/100);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let sb,tab="dash",cats=[],prods=[];
+// ---- सेटअप जाँच: URL/Key सही है? कोई secret key तो नहीं? ----
+function cfgErr(){const u=SUPABASE_URL.trim(),k=SUPABASE_ANON_KEY.trim();
+ if(!/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(u))return "SUPABASE_URL गलत है। यह https://xxxx.supabase.co जैसा होना चाहिए (अंत में / या /rest/v1 नहीं)।";
+ if(/^sb_secret_/.test(k))return "यह secret key है। इसे HTML में कभी न डालें। केवल anon या publishable key डालें।";
+ if(k.startsWith("sb_publishable_"))return "";
+ const p=k.split(".");if(p.length!=3)return "SUPABASE_ANON_KEY गलत है। Supabase → Project Settings → API से anon (public) key कॉपी करें।";
+ try{const j=JSON.parse(atob(p[1].replace(/-/g,"+").replace(/_/g,"/")));
+  if(j.role=="service_role")return "⛔ यह service_role key है! इसे तुरंत HTML से हटाएँ और Supabase में key बदल (rotate) दें।";
+  if(j.role!="anon")return "यह anon key नहीं है (role: "+j.role+")।";
+  if(j.ref&&j.ref!=u.slice(8).split(".")[0])return "यह key इस Project URL की नहीं है। दोनों एक ही प्रोजेक्ट से कॉपी करें।"}
+ catch(e){return "SUPABASE_ANON_KEY पढ़ी नहीं जा सकी। दोबारा कॉपी करें।"}
+ return ""}
+function authMsg(e){const m=String(e&&e.message||e),c=e&&e.code;
+ if(e&&(e.name=="AuthRetryableFetchError"||e.status===0||/failed to fetch|networkerror|load failed|network request/i.test(m)))
+  return "🌐 कनेक्शन की समस्या: सर्वर तक पहुँच नहीं हो पाई (Failed to fetch)। पासवर्ड गलत नहीं है। इंटरनेट/VPN जाँचें, फ़ाइल को Claude ऐप के अंदर नहीं बल्कि ब्राउज़र में होस्ट की हुई लिंक से खोलें, और Supabase में प्रोजेक्ट Paused तो नहीं देखें। नीचे \"कनेक्शन जाँचें\" दबाएँ।";
+ if(c=="invalid_credentials"||/invalid login credentials/i.test(m))return "❌ ईमेल या पासवर्ड गलत है।";
+ if(c=="email_not_confirmed"||/not confirmed/i.test(m))return "✉️ यह ईमेल कन्फर्म नहीं है। Supabase → Authentication → Users में यूज़र को Confirm करें।";
+ if(e&&e.status==429)return "⏳ बहुत बार कोशिश हो गई। कुछ मिनट रुककर दोबारा करें।";
+ return "लॉगिन नहीं हो पाया: "+m}
+const ce=cfgErr();
+if(ce){A.innerHTML=`<div class="k"><h2>⚙️ सेटअप गलत है</h2><p class="err">${esc(ce)}</p></div>`}
+else if(typeof supabase=="undefined"){A.innerHTML=`<div class="k"><h2>लाइब्रेरी लोड नहीं हुई</h2><p class="err">Supabase लाइब्रेरी (cdn.jsdelivr.net) लोड नहीं हो पाई। इंटरनेट या ऐडब्लॉकर जाँचकर पेज रिफ्रेश करें।</p><button class="b" onclick="location.reload()">रिफ्रेश</button></div>`}
+else{sb=supabase.createClient(SUPABASE_URL.trim(),SUPABASE_ANON_KEY.trim());boot()}
+async function boot(){try{const{data:{session}}=await sb.auth.getSession();if(!session)return login();
+ const{data,error}=await sb.from("owners").select("user_id").maybeSingle();
+ if(error){await sb.auth.signOut();return login(/PGRST205|PGRST2|schema cache|does not exist|relation/i.test(error.code+" "+error.message)?"⚠️ डेटाबेस सेटअप अधूरा है। Supabase SQL Editor में schema.sql चलाएँ।":authMsg(error))}
+ if(!data){await sb.auth.signOut();return login("🚫 यह खाता अधिकृत एडमिन नहीं है (owners टेबल में जोड़ा नहीं गया)। पहुँच नहीं मिली।")}
+ shell()}catch(e){login(authMsg(e))}}
+async function testConn(){const o=$("#tr");o.textContent="जाँच हो रही है…";
+ try{const r=await fetch(SUPABASE_URL.trim()+"/auth/v1/health",{headers:{apikey:SUPABASE_ANON_KEY.trim()}});
+  o.textContent=r.ok?"✅ Supabase से कनेक्शन ठीक है। अब ईमेल/पासवर्ड जाँचें।":(r.status==401||r.status==403?"⚠️ सर्वर मिला पर key स्वीकार नहीं हुई (status "+r.status+")। key दोबारा कॉपी करें।":"⚠️ सर्वर ने status "+r.status+" दिया। Supabase dashboard में प्रोजेक्ट Paused हो सकता है।")}
+ catch(e){o.textContent="❌ सर्वर तक पहुँच नहीं हुई। (1) फ़ाइल को ब्राउज़र में होस्ट की हुई लिंक से खोलें, Claude ऐप के अंदर से नहीं (2) इंटरनेट/VPN/ऐडब्लॉकर जाँचें (3) Supabase प्रोजेक्ट Paused तो नहीं (4) URL सही है?"}}
+function login(err){A.innerHTML=`<div class="k"><h2>🔐 रवि – एडमिन लॉगिन</h2><label>ईमेल</label><input id="em" type="email" autocomplete="username"><label>पासवर्ड</label><input id="pw" type="password" autocomplete="current-password">
+ <p class="err" id="le" role="alert">${esc(err||"")}</p><button class="b" id="lb" style="width:100%">लॉगिन करें</button>
+ <button class="b o" id="tb" style="width:100%;margin-top:8px">🔌 कनेक्शन जाँचें</button><p class="note" id="tr" role="status"></p>
+ ${location.protocol=="file:"?'<p class="note">⚠️ फ़ाइल सीधे फ़ोन में खुली है। कई फ़ोन इसे ब्लॉक करते हैं; होस्ट की हुई https लिंक से खोलें।</p>':""}</div>`;
+ $("#tb").onclick=testConn;
+ $("#lb").onclick=async()=>{const em=$("#em").value.trim(),pw=$("#pw").value,le=$("#le"),b=$("#lb");le.textContent="";
+  if(!em||!pw){le.textContent="ईमेल और पासवर्ड दोनों भरें।";return}
+  b.disabled=true;b.textContent="लॉगिन हो रहा है…";
+  try{const{error}=await sb.auth.signInWithPassword({email:em,password:pw});if(error)throw error;await boot()}
+  catch(e){le.textContent=authMsg(e);b.disabled=false;b.textContent="लॉगिन करें"}}}
+function shell(){A.innerHTML=`<nav>${[["dash","📊 डैशबोर्ड"],["ord","🧾 ऑर्डर"],["prod","🥬 प्रोडक्ट"]].map(t=>`<button class="b o" data-t="${t[0]}" aria-pressed="${tab==t[0]}">${t[1]}</button>`).join("")}<button class="b o" id="lo">लॉग आउट</button></nav><div id="v">लोड हो रहा है…</div>`;
+ document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{tab=b.dataset.t;shell()});
+ $("#lo").onclick=async()=>{await sb.auth.signOut();login()};({dash,ord,prod})[tab]()}
+const fail=e=>{$("#v").innerHTML=`<div class="k err">त्रुटि: ${esc(e.message)}</div>`};
+// ---------- Dashboard ----------
+async function dash(){const d=new Date(),m0=new Date(d.getFullYear(),d.getMonth(),1).toISOString(),t0=new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();
+ const{data:o,error}=await sb.from("orders").select("id,status,total,created_at,order_items(name_snapshot,grams)").gte("created_at",m0).limit(2000);if(error)return fail(error);
+ const td=o.filter(x=>new Date(x.created_at).getTime()>=t0),sum=a=>a.reduce((s,x)=>s+Number(x.total),0),dl=a=>a.filter(x=>x.status=="delivered"),pend=o.filter(x=>["new","confirmed","preparing","out_for_delivery"].includes(x.status));
+ const cnt={};dl(o).forEach(x=>x.order_items.forEach(i=>cnt[i.name_snapshot]=(cnt[i.name_snapshot]||0)+i.grams));
+ const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ const{data:low}=await sb.from("products").select("name_hi,stock_kg").eq("active",true).lte("stock_kg",5).order("stock_kg").limit(8);
+ $("#v").innerHTML=`<div class="g"><div class="k">आज के ऑर्डर<b>${td.length}</b></div><div class="k">आज की बिक्री (डिलीवर)<b>${rs(sum(dl(td)))}</b></div>
+ <div class="k">इस महीने की बिक्री (डिलीवर)<b>${rs(sum(dl(o)))}</b></div><div class="k">इस महीने ऑर्डर वैल्यू (कैंसल छोड़कर)<b>${rs(sum(o.filter(x=>x.status!="cancelled")))}</b></div>
+ <div class="k">पेंडिंग ऑर्डर<b>${pend.length}</b></div><div class="k">डिलीवर / कैंसल<b>${dl(o).length} / ${o.filter(x=>x.status=="cancelled").length}</b></div></div>
+ <div class="k"><b>🏆 इस महीने ज़्यादा बिके</b>${top.length?top.map(t=>`<div>${esc(t[0])} — ${t[1]/1000} kg</div>`).join(""):'<p class="note">अभी कोई डिलीवर ऑर्डर नहीं।</p>'}</div>
+ <div class="k"><b>⚠️ कम स्टॉक (5 kg या कम)</b>${(low||[]).length?low.map(p=>`<div>${esc(p.name_hi)} — ${p.stock_kg} kg</div>`).join(""):'<p class="note">कोई नहीं।</p>'}</div>
+ <p class="note">यह बिक्री (revenue) है, मुनाफ़ा (profit) नहीं। खर्च का हिसाब अलग से जुड़ेगा।</p>`}
+// ---------- Orders ----------
+let ofl="";
+async function ord(){let q=sb.from("orders").select("*,order_items(*)").order("created_at",{ascending:false}).limit(100);if(ofl)q=q.eq("status",ofl);
+ const{data,error}=await q;if(error)return fail(error);
+ $("#v").innerHTML=`<div class="row"><select id="f"><option value="">सभी ऑर्डर</option>${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${k==ofl?"selected":""}>${v}</option>`).join("")}</select><button class="b o" id="rf">रिफ्रेश</button></div>`+
+ (data.length?data.map(o=>`<div class="k"><div class="row"><b>#${esc(o.order_no)}</b><span class="st">${ST[o.status]}</span></div>
+ <div class="note">${new Date(o.created_at).toLocaleString("hi-IN")}</div>
+ <div><b>${esc(o.customer_name)}</b> • <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></div>
+ <div>${esc([o.house,o.locality,o.landmark,o.pin].filter(Boolean).join(", "))||esc(o.address)}</div>
+ ${o.distance_km!=null?`<div class="note">दूरी: ${o.distance_km} km</div>`:""}
+ <div style="margin:6px 0">${o.order_items.map(i=>`${esc(i.name_snapshot)} ${i.grams>=1000?i.grams/1000+" kg":i.grams+" g"} — ${rs(i.line_total)}`).join("<br>")}</div>
+ <div>योग ${rs(o.subtotal)} + डिलीवरी ${rs(o.delivery_fee)} = <b>${rs(o.total)}</b> (${o.payment_method=="cod"?"COD":esc(o.payment_method)}, ${o.payment_status=="paid"?"भुगतान सत्यापित":"भुगतान बाकी"})</div>
+ ${o.notes?`<div class="note">नोट: ${esc(o.notes)}</div>`:""}
+ <div class="row" style="margin-top:8px">${o.status=="new"?`<button class="b s" data-s="${o.id}|confirmed">✅ स्वीकार करें</button><button class="b d s" data-s="${o.id}|cancelled">❌ कैंसल</button>`:
+ NEXT[o.status]?`<button class="b s" data-s="${o.id}|${NEXT[o.status]}">➡️ ${ST[NEXT[o.status]]}</button><button class="b d s" data-s="${o.id}|cancelled">❌ कैंसल</button>`:""}
+ <a class="b o s" style="display:grid;place-items:center;text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/91${esc(o.phone.replace(/\D/g,"").slice(-10))}">WhatsApp</a></div></div>`).join(""):`<div class="k note">कोई ऑर्डर नहीं मिला।</div>`);
+ $("#f").onchange=e=>{ofl=e.target.value;ord()};$("#rf").onclick=ord;
+ document.querySelectorAll("[data-s]").forEach(b=>b.onclick=async()=>{const[id,s]=b.dataset.s.split("|");
+  if(s=="cancelled"&&!confirm("यह ऑर्डर कैंसल करें?"))return;
+  const{error}=await sb.from("orders").update({status:s}).eq("id",id);if(error)alert("अपडेट नहीं हुआ: "+error.message);ord()})}
+// ---------- Products ----------
+async function prod(){const[c,p]=await Promise.all([sb.from("categories").select("*").order("sort"),sb.from("products").select("*").order("created_at",{ascending:false})]);
+ if(c.error||p.error)return fail(c.error||p.error);cats=c.data;prods=p.data;
+ $("#v").innerHTML=`<button class="b" id="np" style="width:100%">➕ नया प्रोडक्ट जोड़ें</button>`+(prods.length?prods.map(p=>`<div class="k"><div class="row" style="flex-wrap:nowrap">
+ ${p.image_path?`<img class="im" alt="" src="${sb.storage.from("product-images").getPublicUrl(p.image_path).data.publicUrl}">`:'<div class="im"></div>'}
+ <div><b>${esc(p.name_hi)}</b> <span class="note">${esc(p.name_hg||"")}</span><br><span class="st">${p.in_stock&&p.stock_kg>0?"स्टॉक में":"स्टॉक खत्म"}</span></div></div>
+ <div class="row sm" style="margin-top:8px"><div><label>कीमत ₹/kg</label><input type="number" step="0.5" min="0" id="pr${p.id}" value="${p.price_per_kg}"></div><div><label>स्टॉक (kg)</label><input type="number" step="0.5" min="0" id="sk${p.id}" value="${p.stock_kg}"></div></div>
+ <div class="row" style="margin-top:8px"><button class="b s" data-q="${p.id}">सेव</button><button class="b o s" data-e="${p.id}">पूरा बदलें</button><button class="b d s" data-x="${p.id}">हटाएँ</button></div></div>`).join(""):`<div class="k note">अभी कोई प्रोडक्ट नहीं। ऊपर से पहला प्रोडक्ट जोड़ें।</div>`);
+ $("#np").onclick=()=>form();
+ document.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>form(prods.find(p=>p.id==b.dataset.e)));
+ document.querySelectorAll("[data-q]").forEach(b=>b.onclick=async()=>{const id=b.dataset.q,pr=+$("#pr"+id).value,sk=+$("#sk"+id).value;
+  if(!(pr>=0)||!(sk>=0))return alert("सही संख्या डालें");
+  const{error}=await sb.from("products").update({price_per_kg:pr,stock_kg:sk,in_stock:sk>0}).eq("id",id);error?alert(error.message):(b.textContent="सेव हुआ ✓",setTimeout(prod,700))});
+ document.querySelectorAll("[data-x]").forEach(b=>b.onclick=async()=>{const p=prods.find(x=>x.id==b.dataset.x);if(!confirm(`"${p.name_hi}" हमेशा के लिए हटाएँ?`))return;
+  const{error}=await sb.from("products").delete().eq("id",p.id);error?alert(error.message):prod()})}
+function form(p){p=p||{};const d=$("#dlg"),v=k=>esc(p[k]??"");
+ d.innerHTML=`<h3>${p.id?"प्रोडक्ट बदलें":"नया प्रोडक्ट"}</h3><label>नाम (हिंदी) *</label><input id="a1" value="${v("name_hi")}"><label>नाम (Hinglish)</label><input id="a2" value="${v("name_hg")}"><label>English नाम</label><input id="a3" value="${v("name_en")}">
+ <label>श्रेणी</label><select id="a4"><option value="">—</option>${cats.map(c=>`<option value="${c.id}" ${c.id==p.category_id?"selected":""}>${esc(c.emoji)} ${esc(c.name_hi)}</option>`).join("")}</select>
+ <div class="row"><div><label>कीमत ₹/kg *</label><input id="a5" type="number" min="0" step="0.5" value="${v("price_per_kg")}"></div><div><label>पुरानी कीमत (छूट हो तो)</label><input id="a6" type="number" min="0" step="0.5" value="${v("original_price")}"></div></div>
+ <label>स्टॉक (kg)</label><input id="a7" type="number" min="0" step="0.5" value="${v("stock_kg")||0}"><label>विवरण</label><input id="a8" value="${v("description")}">
+ <div class="ck"><input type="checkbox" id="a9" ${p.is_fresh?"checked":""}><label>आज की ताज़ा</label></div><div class="ck"><input type="checkbox" id="b1" ${p.is_popular?"checked":""}><label>बेस्ट सेलर</label></div>
+ <label>फोटो</label><div class="row"><label class="b o" style="display:grid;place-items:center">📷 फोटो खींचें<input id="cam" type="file" accept="image/*" capture="environment" hidden></label><label class="b o" style="display:grid;place-items:center">🖼️ गैलरी<input id="gal" type="file" accept="image/*" hidden></label></div>
+ <p class="note" id="fn">${p.image_path?"पुरानी फोटो रहेगी जब तक नई न चुनें।":""}</p><p class="err" id="fe"></p>
+ <div class="row"><button class="b" id="sv">सेव करें</button><button class="b o" id="cl">रद्द करें</button></div>`;
+ let file=null;const pick=e=>{file=e.target.files[0];$("#fn").textContent=file?file.name:""};$("#cam").onchange=pick;$("#gal").onchange=pick;
+ $("#cl").onclick=()=>d.close();
+ $("#sv").onclick=async()=>{const e=$("#fe");e.textContent="";const price=parseFloat($("#a5").value),stock=parseFloat($("#a7").value||0),orig=$("#a6").value===""?null:parseFloat($("#a6").value);
+  if(!$("#a1").value.trim())return e.textContent="हिंदी नाम ज़रूरी है।";if(!(price>=0))return e.textContent="सही कीमत डालें।";if(!(stock>=0))return e.textContent="सही स्टॉक डालें।";
+  if(orig!==null&&orig<price)return e.textContent="पुरानी कीमत नई कीमत से कम नहीं हो सकती।";
+  $("#sv").disabled=true;$("#sv").textContent="सेव हो रहा है…";
+  try{let img=p.image_path;if(file){const path=crypto.randomUUID()+".jpg",blob=await shrink(file);
+    const{error}=await sb.storage.from("product-images").upload(path,blob,{contentType:"image/jpeg"});if(error)throw error;img=path;
+    if(p.image_path)await sb.storage.from("product-images").remove([p.image_path])}
+   const row={name_hi:$("#a1").value.trim(),name_hg:$("#a2").value.trim()||null,name_en:$("#a3").value.trim()||null,category_id:$("#a4").value||null,price_per_kg:price,original_price:orig,stock_kg:stock,in_stock:stock>0,description:$("#a8").value.trim()||null,is_fresh:$("#a9").checked,is_popular:$("#b1").checked,image_path:img};
+   const{error}=p.id?await sb.from("products").update(row).eq("id",p.id):await sb.from("products").insert(row);if(error)throw error;d.close();prod()}
+  catch(x){e.textContent="सेव नहीं हुआ: "+x.message;$("#sv").disabled=false;$("#sv").textContent="सेव करें"}};
+ d.showModal()}
+function shrink(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(new Error("फोटो प्रोसेस नहीं हुई")),"image/jpeg",.8)};im.onerror=()=>no(new Error("फोटो खुल नहीं पाई"));im.src=URL.createObjectURL(f)})}
+</script></body></html>

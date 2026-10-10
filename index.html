@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>रवि सब्ज़ी भंडार – ताज़ी सब्ज़ियाँ, घर तक | Gorakhpur</title>
+<meta name="description" content="सतुआभार चौराहा, खजनी, गोरखपुर की ताज़ी सब्ज़ी और फल की दुकान। घर बैठे ऑर्डर करें।">
+<meta property="og:title" content="रवि सब्ज़ी भंडार">
+<meta property="og:description" content="ताज़ी सब्ज़ियाँ, अब आपके घर तक!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfdf9;--card:#fff;--ink:#17261c;--mute:#5b6b60;--g:#1f6b3a;--gd:#123d24;--gl:#e6f3e8;--y:#f2b01e;--r:#d9482b;--line:#dfe9e0;--sh:0 2px 10px rgba(18,61,36,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a12;--card:#16261b;--ink:#eaf3ec;--mute:#9db1a3;--g:#4fb36f;--gd:#0a1d11;--gl:#1b3324;--line:#2a4032;--sh:0 2px 10px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--bg:#0e1a12;--card:#16261b;--ink:#eaf3ec;--mute:#9db1a3;--g:#4fb36f;--gd:#0a1d11;--gl:#1b3324;--line:#2a4032;--sh:0 2px 10px rgba(0,0,0,.4)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Hind,system-ui,sans-serif}
+h1,h2,h3{font-family:'Baloo 2',Hind,sans-serif;line-height:1.25;margin:0}
+a{color:inherit}button,select,input{font:inherit}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.bar{background:var(--gd);color:#fff;font-size:14px;text-align:center;padding:6px 12px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:10px;padding:10px 0;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font:800 20px 'Baloo 2';color:var(--g)}
+.logo i{font-style:normal;background:var(--g);color:#fff;border-radius:12px;width:38px;height:38px;display:grid;place-items:center;font-size:20px}
+.sp{flex:1}
+.cartbtn{position:relative;background:var(--g);color:#fff;border:0;border-radius:12px;height:44px;padding:0 14px;cursor:pointer;font-weight:600}
+.cartbtn b{position:absolute;top:-6px;right:-6px;background:var(--y);color:#222;border-radius:99px;min-width:22px;height:22px;font-size:13px;display:grid;place-items:center}
+.search{flex:1 1 100%;order:3;display:flex;gap:8px}
+.search input{flex:1;height:44px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;background:var(--bg);color:var(--ink)}
+.loc{border:1.5px solid var(--line);background:none;color:var(--ink);border-radius:12px;height:44px;padding:0 12px;cursor:pointer}
+.hero{background:linear-gradient(160deg,var(--gd),var(--g));color:#fff;padding:36px 0 44px}
+.hero .wrap{display:grid;gap:24px}
+.hero h1{font-size:clamp(32px,7vw,56px);font-weight:800}
+.hero p{font-size:18px;max-width:34em;opacity:.95}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:12px;font-weight:600;text-decoration:none;border:0;cursor:pointer;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.b1{background:var(--y);color:#222}.b2{background:transparent;color:#fff;border:2px solid #ffffffaa}
+.tag{background:#fff;color:var(--ink);border-radius:16px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.2);position:relative;max-width:420px}
+.tag::before{content:"";position:absolute;left:-8px;top:50%;width:16px;height:16px;border-radius:50%;background:var(--g);transform:translateY(-50%)}
+.tag h3{color:var(--g);font-size:20px}.tag p{margin:6px 0 0;font-size:16px;opacity:1;color:#333}
+section{padding:36px 0}
+h2{font-size:26px;margin-bottom:14px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 14px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed=true]{background:var(--g);border-color:var(--g);color:#fff}
+.tabs .chip{border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:720px){.grid{grid-template-columns:repeat(4,1fr)}.hero .wrap{grid-template-columns:1.4fr 1fr;align-items:center}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
+.pic{height:96px;display:grid;place-items:center;font-size:52px;background:var(--gl);position:relative}
+.lbl{position:absolute;top:8px;left:8px;font-size:12px;background:var(--y);color:#222;border-radius:6px;padding:0 7px;font-weight:600}
+.lbl.o{background:var(--r);color:#fff}
+.pb{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.pn{font-weight:600;font-size:17px}.pe{font-size:13px;color:var(--mute);margin-top:-6px}
+.pr{font-size:14px;color:var(--mute)}.pr b{font-size:18px;color:var(--g)}.pr s{margin-right:4px}
+.pb select{height:40px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:0 8px}
+.add{margin-top:auto;min-height:44px;border:0;border-radius:10px;background:var(--g);color:#fff;font-weight:600;cursor:pointer}
+.add:disabled{background:var(--line);color:var(--mute);cursor:not-allowed}
+.empty{padding:28px;text-align:center;color:var(--mute);border:1.5px dashed var(--line);border-radius:16px}
+.cols{display:grid;gap:12px}
+@media(min-width:720px){.cols.c3{grid-template-columns:repeat(3,1fr)}.cols.c2{grid-template-columns:1fr 1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--sh)}
+.box h3{font-size:19px;color:var(--g);margin-bottom:4px}.box p{margin:0;color:var(--mute)}
+table{width:100%;border-collapse:collapse}td{padding:8px 0;border-bottom:1px solid var(--line)}td:last-child{text-align:right;font-weight:600}
+.trust{background:var(--gl);text-align:center;padding:22px 16px;font:600 20px 'Baloo 2'}
+footer{background:var(--gd);color:#d6e6da;padding:28px 0 20px;font-size:15px}
+footer a{display:block;padding:4px 0;text-decoration:none}
+.fg{display:grid;gap:18px}@media(min-width:720px){.fg{grid-template-columns:2fr 1fr 1fr}}
+.note{font-size:13px;color:var(--mute)}
+/* cart drawer */
+#ov{position:fixed;inset:0;background:#0007;display:none;z-index:40}
+#dr{position:fixed;right:0;top:0;bottom:0;width:min(420px,100%);background:var(--card);z-index:41;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body.open #dr{transform:none}body.open #ov{display:block}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+.di{flex:1;overflow:auto;padding:12px 16px}
+.ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.ci div:first-child{flex:1}.ci small{color:var(--mute)}
+.q{display:flex;align-items:center;gap:6px}.q button{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line);background:none;color:var(--ink);cursor:pointer;font-size:18px}
+.df{padding:14px 16px;border-top:1px solid var(--line)}
+.row{display:flex;justify-content:space-between;padding:2px 0}.tot{font-weight:600;font-size:18px}
+.msg{background:var(--gl);border-radius:10px;padding:8px 10px;font-size:14px;margin:8px 0}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translate(-50%,80px);background:var(--gd);color:#fff;padding:10px 16px;border-radius:12px;z-index:50;transition:transform .25s}
+#toast.s{transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.pic{border:0;width:100%;cursor:pointer;color:inherit;font-size:52px}
+.frow{display:flex;align-items:center;gap:10px;margin:4px 0 12px;flex-wrap:wrap}
+.frow select,.gi{height:38px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:0 8px}
+.gi{width:100%}.low{font-size:13px;color:var(--r);font-weight:600}
+dialog{border:0;border-radius:18px;padding:16px;width:min(380px,92vw);background:var(--card);color:var(--ink)}
+dialog::backdrop{background:#0008}
+.zone{margin-top:8px;padding:8px;border:1.5px dashed var(--line);border-radius:10px}.zone .chip{margin:4px 4px 0 0}
+.q span{min-width:52px;text-align:center;font-size:14px}
+</style>
+</head>
+<body>
+<div class="bar">₹100+ पर 5 km के अंदर फ्री डिलीवरी • ₹100 से कम पर ₹30 चार्ज</div>
+<header><div class="wrap hrow">
+  <a class="logo" href="#top"><i>🥬</i>रवि सब्ज़ी भंडार</a><span class="sp"></span>
+  <button class="loc" id="langb" aria-label="Language">Hinglish</button>
+  <button class="loc" id="locb" aria-label="डिलीवरी लोकेशन">📍 सतुआभार</button>
+  <button class="cartbtn" id="cartb" aria-label="कार्ट खोलें">🛒 कार्ट<b id="cnt">0</b></button>
+  <div class="search"><input id="q" type="search" placeholder="सब्ज़ी या फल खोजें… (जैसे: आलू, tamatar)" aria-label="खोजें"></div>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <div>
+    <h1>ताज़ी सब्ज़ियाँ, अब आपके घर तक!</h1>
+    <p>सतुआभार और आसपास के क्षेत्रों में ताज़ी सब्ज़ियों की आसान ऑनलाइन खरीदारी।</p>
+    <div class="cta"><a class="btn b1" href="#shop">अभी खरीदें</a>
+    <a class="btn b2" href="https://wa.me/918957400266?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%20%E0%A4%B0%E0%A4%B5%E0%A4%BF%20%E0%A4%B8%E0%A4%AC%E0%A5%8D%E0%A4%9C%E0%A4%BC%E0%A5%80%20%E0%A4%AD%E0%A4%82%E0%A4%A1%E0%A4%BE%E0%A4%B0" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a></div>
+  </div>
+  <div class="tag"><h3>डिलीवरी चार्ज</h3><p>₹100 या उससे अधिक की खरीदारी पर 5 km के अंदर फ्री डिलीवरी। ₹100 से कम के ऑर्डर पर ₹30 डिलीवरी चार्ज।</p></div>
+</div></div>
+
+<section id="shop"><div class="wrap">
+  <h2>हमारी दुकान</h2>
+  <div class="chips" id="cats" role="group" aria-label="श्रेणी"></div>
+  <div class="chips tabs" id="tabs" role="group" aria-label="फ़िल्टर"></div>
+  <div class="frow"><span id="cnt2" class="note"></span><span class="sp"></span><label class="note"><input type="checkbox" id="os"> सिर्फ़ उपलब्ध</label><select id="so" aria-label="क्रम"><option value="">क्रम</option><option value="lo">कीमत: कम से ज़्यादा</option><option value="hi">कीमत: ज़्यादा से कम</option></select></div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+  
+</div></section>
+
+<section id="delivery" style="background:var(--gl)"><div class="wrap">
+  <h2>डिलीवरी की जानकारी</h2>
+  <div class="cols c2">
+    <div class="box"><h3>चार्ज कैसे लगेगा</h3><table>
+      <tr><td>₹100 या अधिक, 5 km के अंदर</td><td>फ्री</td></tr>
+      <tr><td>₹100 से कम, 5 km के अंदर</td><td>₹30</td></tr>
+      <tr><td>5 km से बाहर</td><td>WhatsApp पर पूछें</td></tr></table>
+      <p class="note" style="margin-top:8px">दूरी दुकान के सत्यापित निर्देशांक से सीधी रेखा में नापी जाएगी, और अंतिम जाँच सर्वर पर होगी।</p></div>
+    <div class="box"><h3>5 km से बाहर?</h3><p>आपका पता हमारी फ्री डिलीवरी सीमा से बाहर है। डिलीवरी की उपलब्धता और चार्ज के लिए कृपया WhatsApp पर संपर्क करें।</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap"><h2>हमें क्यों चुनें</h2>
+  <div class="cols c3">
+    <div class="box"><h3>🌱 ताज़गी</h3><p>एक ही दुकान, सीधे रवि जी की निगरानी में।</p></div>
+    <div class="box"><h3>🏠 होम डिलीवरी</h3><p>सतुआभार और आसपास के इलाकों में।</p></div>
+    <div class="box"><h3>💵 कैश ऑन डिलीवरी</h3><p>सामान मिलने पर भुगतान।</p></div>
+  </div></div></section>
+
+<section><div class="wrap"><h2>ग्राहकों की राय</h2>
+  <div class="empty">अभी कोई समीक्षा नहीं है। असली ग्राहकों की समीक्षाएँ ऑर्डर पूरे होने के बाद यहाँ दिखाई जाएँगी।</div></div></section>
+
+<section id="contact" style="background:var(--gl)"><div class="wrap"><h2>संपर्क और समय</h2>
+  <div class="cols c2">
+    <div class="box"><h3>पता</h3><p>रवि सब्ज़ी भंडार<br>सतुआभार चौराहा, खजनी, गोरखपुर, उत्तर प्रदेश – 273212</p>
+      <p style="margin-top:8px"><a href="tel:+918957400266">📞 +91 89574 00266</a></p></div>
+    <div class="box"><h3>दुकान का समय</h3><p>समय एडमिन सेटिंग्स से जोड़ा जाएगा (अभी तय नहीं)।</p></div>
+  </div></div></section>
+</main>
+
+<div class="trust">आपका भरोसा हमारी प्राथमिकता है। ताज़ी सब्ज़ियाँ और आसान होम डिलीवरी।</div>
+<footer><div class="wrap fg">
+  <div><b>रवि सब्ज़ी भंडार</b><br>सतुआभार चौराहा, खजनी, गोरखपुर 273212</div>
+  <div><a href="#shop">दुकान</a><a href="#delivery">डिलीवरी</a><a href="#contact">संपर्क</a></div>
+  <div class="note" style="color:#9fb8a6">Privacy, Terms, Cancellation और Refund पॉलिसी पेज Phase 8 से पहले जोड़े जाएँगे।</div>
+</div></footer>
+
+<div id="ov"></div>
+<aside id="dr" aria-label="शॉपिंग कार्ट">
+  <div class="dh"><h3>आपका कार्ट</h3><button class="chip" id="cx">बंद करें</button></div>
+  <div class="di" id="items"></div>
+  <div class="df" id="foot"></div>
+</aside>
+<dialog id="dlg"><div id="dc"></div></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+let CATS=[],P=[],st="load";
+const U={"250":"250 g","500":"500 g","1000":"1 kg","2000":"2 kg","c":"अपनी मात्रा"};
+let cat=-1,tab="all",sort="",onlyStock=false,zone="unknown",cart=[],note="";
+try{cart=JSON.parse(localStorage.getItem("rsb_cart")||"[]");zone=localStorage.getItem("rsb_zone")||"unknown"}catch(e){}
+const $=s=>document.querySelector(s),rs=n=>"₹"+(Math.round(n*100)/100);
+const price=(p,g)=>Math.round(p*g/1000*100)/100;
+const gl=g=>g>=1000?(g/1000)+" kg":g+" g";
+const byId=id=>P.find(p=>p.id==id);
+function save(){try{localStorage.setItem("rsb_cart",JSON.stringify(cart));localStorage.setItem("rsb_zone",zone)}catch(e){}}
+function toast(t){const e=$("#toast");e.textContent=t;applyLang(e);e.classList.add("s");setTimeout(()=>e.classList.remove("s"),2200)}
+// Re-check saved cart against current prices/stock (Test H)
+function revalidate(){const n0=cart.length;let ch=false;
+ cart=cart.filter(i=>{const p=byId(i.id);if(!p||!p.stock){ch=true;return false}
+  const mx=p.stock*1000;if(i.g>mx){i.g=mx;ch=true}return i.g>=50});
+ note=ch?"कुछ आइटम स्टॉक के अनुसार बदले या हटाए गए हैं।":"";save()}
+function chips(){
+ $("#cats").innerHTML=`<button class="chip" aria-pressed="${cat<0}" data-c="-1">सभी</button>`+CATS.map((c,i)=>`<button class="chip" aria-pressed="${cat==i}" data-c="${i}">${c[0]} ${cn(i)}</button>`).join("");
+ $("#tabs").innerHTML=[["all","सभी"],["fresh","आज की ताज़ा"],["pop","बेस्ट सेलर"],["off","ऑफ़र"]].map(t=>`<button class="chip" aria-pressed="${tab==t[0]}" data-t="${t[0]}">${t[1]}</button>`).join("");
+}
+function ctl(p,k){return p.stock?`<select id="u${k}${p.id}" data-u="${k}${p.id}" aria-label="मात्रा">${Object.entries(U).map(([v,t])=>`<option value="${v}" ${v==1000?"selected":""}>${t}</option>`).join("")}</select>
+ <input id="g${k}${p.id}" class="gi" type="number" min="50" step="50" placeholder="ग्राम में, जैसे 750" hidden aria-label="ग्राम">
+ <button class="add" data-a="${k}${p.id}">कार्ट में डालें</button>`:`<span class="pr">स्टॉक खत्म</span><button class="add" disabled>उपलब्ध नहीं</button>`}
+function render(){if(st!="ok"){$("#cnt2").textContent="";$("#grid").innerHTML=st=="load"?'<div class="empty" style="grid-column:1/-1">लोड हो रहा है…</div>':'<div class="empty" style="grid-column:1/-1">प्रोडक्ट लोड नहीं हो पाए। इंटरनेट जाँचकर दोबारा कोशिश करें।<br><button class="chip" data-reload="1" style="margin-top:8px">दोबारा कोशिश करें</button></div>';return}
+ const q=$("#q").value.trim().toLowerCase();
+ let L=P.filter(p=>(cat<0||p.c==cat)&&(!onlyStock||p.stock)&&(tab=="all"||(tab=="fresh"&&p.fresh)||(tab=="pop"&&p.pop)||(tab=="off"&&p.o))&&(!q||(p.hi+p.en+HG[p.id]).toLowerCase().includes(q)));
+ if(sort=="lo")L.sort((a,b)=>a.p-b.p);if(sort=="hi")L.sort((a,b)=>b.p-a.p);
+ $("#cnt2").textContent=L.length+" प्रोडक्ट";
+ $("#grid").innerHTML=L.length?L.map(p=>`<article class="card"><button class="pic" data-d="${p.id}" aria-label="${nm(p)} की जानकारी">${pic(p)}${p.fresh?'<span class="lbl">ताज़ा</span>':''}${p.o?'<span class="lbl o">ऑफ़र</span>':''}</button>
+ <div class="pb"><div class="pn">${nm(p)}</div><div class="pe">${p.en}</div>
+ <div class="pr">${p.o?`<s>₹${p.o}</s>`:""}<b>₹${p.p}</b>/kg</div>
+ ${p.stock&&p.stock<=5?`<div class="low">सिर्फ़ ${p.stock} kg बचा</div>`:""}${ctl(p,"c")}</div></article>`).join(""):`<div class="empty" style="grid-column:1/-1">कोई प्रोडक्ट नहीं मिला। दूसरी श्रेणी या शब्द आज़माएँ।<br><button class="chip" data-reset="1" style="margin-top:8px">फ़िल्टर हटाएँ</button></div>`;
+}
+function cartUI(){if(st!="ok"){$("#cnt").textContent=cart.length;$("#items").innerHTML="";$("#foot").innerHTML="";return}
+ const n=cart.length;$("#cnt").textContent=n;
+ const sub=cart.reduce((s,i)=>s+price(byId(i.id).p,i.g),0);
+ const sav=cart.reduce((s,i)=>{const p=byId(i.id);return s+(p.o?price(p.o-p.p,i.g):0)},0);
+ $("#items").innerHTML=(note?`<div class="msg">${note}</div>`:"")+(n?cart.map((i,k)=>{const p=byId(i.id);return `<div class="ci"><div>${p.e} ${nm(p)}<br><small>${gl(i.g)} × ₹${p.p}/kg = <b>${rs(price(p.p,i.g))}</b></small></div>
+ <div class="q"><button data-m="${k}" aria-label="घटाएँ">−</button><span>${gl(i.g)}</span><button data-pl="${k}" aria-label="बढ़ाएँ">+</button><button data-r="${k}" aria-label="हटाएँ">🗑</button></div></div>`}).join(""):`<div class="empty">आपका कार्ट खाली है।<br>ऊपर से ताज़ी सब्ज़ियाँ चुनें।<br><button class="btn b1" id="goshop" style="margin-top:10px">खरीदारी शुरू करें</button></div>`);
+ if(!n){$("#foot").innerHTML="";return}
+ let feeRow,fee=0,msg="";
+ if(zone=="outside"){feeRow="WhatsApp पर पूछें";msg=`<div class="msg">आपका पता हमारी फ्री डिलीवरी सीमा से बाहर है। डिलीवरी की उपलब्धता और चार्ज के लिए कृपया WhatsApp पर संपर्क करें।</div>`}
+ else{fee=sub<100?30:0;feeRow=fee?rs(fee):"फ्री"+(zone=="unknown"?"*":"");
+  if(zone=="inside"&&sub<100)msg=`<div class="msg">फ्री डिलीवरी पाने के लिए ₹${Math.round((100-sub)*100)/100} की और खरीदारी करें।</div>`}
+ $("#foot").innerHTML=`<div class="row"><span>सब्ज़ियों का योग</span><span>${rs(sub)}</span></div>
+ ${sav?`<div class="row" style="color:var(--g)"><span>आपकी बचत</span><span>${rs(sav)}</span></div>`:""}
+ <div class="row"><span>डिलीवरी</span><span>${feeRow}</span></div>
+ <div class="row tot"><span>कुल</span><span>${rs(sub+fee)}${zone=="outside"?" + डिलीवरी":""}</span></div>${msg}
+ <p class="note">${zone=="unknown"?"*5 km के अंदर के पते पर। ":""}अंतिम चार्ज सर्वर पता जाँचकर तय करेगा।</p>
+ <div class="zone"><small>पता क्षेत्र (डेमो – Phase 6 में GPS और सर्वर से जाँच होगी):</small><div><button class="chip" aria-pressed="${zone=="inside"}" data-z="inside">5 km के अंदर</button> <button class="chip" aria-pressed="${zone=="outside"}" data-z="outside">5 km से बाहर</button></div></div>
+ <button class="btn b1" style="width:100%;margin-top:8px" disabled>चेकआउट (Phase 5 में जुड़ेगा)</button>`;
+}
+function readG(k){const v=$("#u"+k).value;if(v!="c")return +v;return Math.round(+$("#g"+k).value)}
+function add(k){const id=k.slice(1);const p=byId(id),g=readG(k);
+ if(!(g>=50)){toast("कम से कम 50 g चुनें");return}
+ const e=cart.find(i=>i.id==id),cur=e?e.g:0,mx=p.stock*1000;
+ if(!p.stock){toast("यह प्रोडक्ट स्टॉक में नहीं है");return}
+ if(cur+g>mx){toast(`स्टॉक में सिर्फ़ ${gl(mx)} है`);return}
+ e?e.g+=g:cart.push({id,g});save();cartUI();toast(nm(p)+" कार्ट में जोड़ा ✓")}
+function details(id){const p=byId(id);
+ $("#dc").innerHTML=`<button class="chip" data-close="1" style="float:right">बंद करें</button><div class="pic" style="height:110px;border-radius:12px;overflow:hidden">${pic(p)}</div><h3 style="margin-top:10px">${nm(p)}</h3><div class="pe">${p.en}</div>
+ <p>${p.d}</p><div class="pr">${p.o?`<s>₹${p.o}</s>`:""}<b>₹${p.p}</b>/kg • ${p.stock?`स्टॉक: ${p.stock} kg`:"स्टॉक खत्म"}</div><div class="pb" style="padding:10px 0">${ctl(p,"d")}</div>`;
+ $("#dlg").showModal()}
+document.addEventListener("change",e=>{const u=e.target.dataset.u;if(u){const i=$("#g"+u);i.hidden=e.target.value!="c"}
+ if(e.target.id=="os"){onlyStock=e.target.checked;render()}if(e.target.id=="so"){sort=e.target.value;render()}});
+document.addEventListener("click",e=>{if(e.target.id=="goshop"){document.body.classList.remove("open");location.hash="#shop";return}
+ const t=e.target.closest("button");if(!t)return;const d=t.dataset;
+ if(d.c!==undefined){cat=+d.c;chips();render()}
+ else if(d.t){tab=d.t;chips();render()}
+ else if(d.reset){cat=-1;tab="all";onlyStock=false;sort="";$("#q").value="";$("#os").checked=false;$("#so").value="";chips();render()}
+ else if(d.reload)load();
+ else if(d.a)add(d.a);
+ else if(d.d){details(d.d)}
+ else if(d.close)$("#dlg").close();
+ else if(d.z){zone=d.z;save();cartUI()}
+ else if(d.pl!==undefined){const i=cart[d.pl],p=byId(i.id),st=i.g>=1000?500:250;
+  if(i.g+st>p.stock*1000)toast(`स्टॉक में सिर्फ़ ${gl(p.stock*1000)} है`);else{i.g+=st;save();cartUI()}}
+ else if(d.m!==undefined){const i=cart[d.m];i.g-=i.g>1000?500:250;if(i.g<50)cart.splice(d.m,1);save();cartUI()}
+ else if(d.r!==undefined){cart.splice(d.r,1);save();cartUI()}});
+$("#q").addEventListener("input",render);
+$("#cartb").onclick=()=>document.body.classList.add("open");
+$("#cx").onclick=$("#ov").onclick=()=>document.body.classList.remove("open");
+$("#locb").onclick=()=>{location.hash="#delivery"};
+// ---- Hindi / Hinglish ----
+let lang="hi";try{lang=localStorage.getItem("rsb_lang")||"hi"}catch(e){}
+const L=(a,b)=>lang=="hg"?b:a;
+let CH=["Aloo-Pyaaz","Hari sabziyan","Rozana ki sabziyan","Patedaar sabziyan","Taaze phal","Masale","Adrak aur lahsun","Mausmi sabziyan"];
+let HG={1:"Aloo",2:"Pyaaz",3:"Tamatar",4:"Palak",5:"Kela",6:"Hari mirch",7:"Lahsun",8:"Gajar",9:"Lauki"};
+const nm=p=>lang=="hg"?HG[p.id]:p.hi, cn=i=>lang=="hg"?CH[i]:CATS[i][1];
+const WA="WhatsApp par puchhein";
+const OUT="Aapka pata hamari free delivery seema se bahar hai. Delivery ki uplabdhta aur charge ke liye kripya WhatsApp par sampark karein.";
+const D={"₹100+ पर 5 km के अंदर फ्री डिलीवरी • ₹100 से कम पर ₹30 चार्ज":"₹100+ par 5 km ke andar free delivery • ₹100 se kam par ₹30 charge",
+"रवि सब्ज़ी भंडार":"Ravi Sabzi Bhandar","📍 सतुआभार":"📍 Satuabhar","🛒 कार्ट":"🛒 Cart",
+"सब्ज़ी या फल खोजें… (जैसे: आलू, tamatar)":"Sabzi ya phal khojein… (jaise: aloo, tamatar)","खोजें":"Khojein","डिलीवरी लोकेशन":"Delivery location","कार्ट खोलें":"Cart kholein","शॉपिंग कार्ट":"Shopping cart","मात्रा":"Matra","ग्राम में, जैसे 750":"Gram mein, jaise 750","ग्राम":"Gram",
+"ताज़ी सब्ज़ियाँ, अब आपके घर तक!":"Taazi sabziyan, ab aapke ghar tak!",
+"सतुआभार और आसपास के क्षेत्रों में ताज़ी सब्ज़ियों की आसान ऑनलाइन खरीदारी।":"Satuabhar aur aaspaas ke kshetron mein taazi sabziyon ki aasaan online kharidari.",
+"अभी खरीदें":"Abhi kharidein","WhatsApp पर संपर्क करें":"WhatsApp par sampark karein","डिलीवरी चार्ज":"Delivery charge",
+"₹100 या उससे अधिक की खरीदारी पर 5 km के अंदर फ्री डिलीवरी। ₹100 से कम के ऑर्डर पर ₹30 डिलीवरी चार्ज।":"₹100 ya usse adhik ki kharidari par 5 km ke andar free delivery. ₹100 se kam ke order par ₹30 delivery charge.",
+"हमारी दुकान":"Hamari dukaan","सभी":"Sabhi","आज की ताज़ा":"Aaj ki taaza","बेस्ट सेलर":"Best seller","ऑफ़र":"Offer","ताज़ा":"Taaza",
+"सिर्फ़ उपलब्ध":"Sirf uplabdh","क्रम":"Kram","कीमत: कम से ज़्यादा":"Keemat: kam se zyada","कीमत: ज़्यादा से कम":"Keemat: zyada se kam",
+"⚠️ अभी दिख रहे प्रोडक्ट और भाव केवल नमूना (sample) हैं। असली भाव और स्टॉक रवि जी एडमिन पैनल से तय करेंगे।":"⚠️ Abhi dikh rahe product aur bhaav sirf namuna (sample) hain. Asli bhaav aur stock Ravi ji admin panel se tay karenge.",
+"डिलीवरी की जानकारी":"Delivery ki jaankari","चार्ज कैसे लगेगा":"Charge kaise lagega","₹100 या अधिक, 5 km के अंदर":"₹100 ya adhik, 5 km ke andar","फ्री":"Free","फ्री*":"Free*","₹100 से कम, 5 km के अंदर":"₹100 se kam, 5 km ke andar","5 km से बाहर":"5 km se bahar","WhatsApp पर पूछें":WA,
+"दूरी दुकान के सत्यापित निर्देशांक से सीधी रेखा में नापी जाएगी, और अंतिम जाँच सर्वर पर होगी।":"Doori dukaan ke satyapit nirdeshank se seedhi rekha mein naapi jayegi, aur antim jaanch server par hogi.",
+"5 km से बाहर?":"5 km se bahar?","आपका पता हमारी फ्री डिलीवरी सीमा से बाहर है। डिलीवरी की उपलब्धता और चार्ज के लिए कृपया WhatsApp पर संपर्क करें।":OUT,
+"हमें क्यों चुनें":"Hamein kyon chunein","🌱 ताज़गी":"🌱 Taazgi","एक ही दुकान, सीधे रवि जी की निगरानी में।":"Ek hi dukaan, seedhe Ravi ji ki nigrani mein.","🏠 होम डिलीवरी":"🏠 Home delivery","सतुआभार और आसपास के इलाकों में।":"Satuabhar aur aaspaas ke ilaakon mein.","💵 कैश ऑन डिलीवरी":"💵 Cash on Delivery","सामान मिलने पर भुगतान।":"Saaman milne par bhugtan.",
+"ग्राहकों की राय":"Grahakon ki raay","अभी कोई समीक्षा नहीं है। असली ग्राहकों की समीक्षाएँ ऑर्डर पूरे होने के बाद यहाँ दिखाई जाएँगी।":"Abhi koi sameeksha nahi hai. Asli grahakon ki sameekshayein order poore hone ke baad yahan dikhayi jayengi.",
+"संपर्क और समय":"Sampark aur samay","पता":"Pata","सतुआभार चौराहा, खजनी, गोरखपुर, उत्तर प्रदेश – 273212":"Satuabhar Chauraha, Khajni, Gorakhpur, Uttar Pradesh – 273212","दुकान का समय":"Dukaan ka samay","समय एडमिन सेटिंग्स से जोड़ा जाएगा (अभी तय नहीं)।":"Samay admin settings se joda jayega (abhi tay nahi).",
+"आपका भरोसा हमारी प्राथमिकता है। ताज़ी सब्ज़ियाँ और आसान होम डिलीवरी।":"Aapka bharosa hamari praathmikta hai. Taazi sabziyan aur aasaan home delivery.",
+"सतुआभार चौराहा, खजनी, गोरखपुर 273212":"Satuabhar Chauraha, Khajni, Gorakhpur 273212","दुकान":"Dukaan","डिलीवरी":"Delivery","संपर्क":"Sampark",
+"Privacy, Terms, Cancellation और Refund पॉलिसी पेज Phase 8 से पहले जोड़े जाएँगे।":"Privacy, Terms, Cancellation aur Refund policy pages Phase 8 se pehle jode jayenge.",
+"आपका कार्ट":"Aapka cart","बंद करें":"Band karein","आपका कार्ट खाली है।":"Aapka cart khaali hai.","ऊपर से ताज़ी सब्ज़ियाँ चुनें।":"Upar se taazi sabziyan chunein.","खरीदारी शुरू करें":"Kharidari shuru karein",
+"सब्ज़ियों का योग":"Sabziyon ka yog","आपकी बचत":"Aapki bachat","कुल":"Kul","कुछ आइटम स्टॉक के अनुसार बदले या हटाए गए हैं।":"Kuch items stock ke hisaab se badle ya hataye gaye hain.",
+"अंतिम चार्ज सर्वर पता जाँचकर तय करेगा।":"Antim charge server pata jaanchkar tay karega.","*5 km के अंदर के पते पर। अंतिम चार्ज सर्वर पता जाँचकर तय करेगा।":"*5 km ke andar ke pate par. Antim charge server pata jaanchkar tay karega.",
+"पता क्षेत्र (डेमो – Phase 6 में GPS और सर्वर से जाँच होगी):":"Pata kshetra (demo – Phase 6 mein GPS aur server se jaanch hogi):","5 km के अंदर":"5 km ke andar","चेकआउट (Phase 5 में जुड़ेगा)":"Checkout (Phase 5 mein judega)",
+"कार्ट में डालें":"Cart mein daalein","स्टॉक खत्म":"Stock khatam","उपलब्ध नहीं":"Uplabdh nahi","अपनी मात्रा":"Apni matra","कोई प्रोडक्ट नहीं मिला। दूसरी श्रेणी या शब्द आज़माएँ।":"Koi product nahi mila. Doosri shreni ya shabd aazmayein.","फ़िल्टर हटाएँ":"Filter hataein",
+"रोज़ के खाने के लिए।":"Roz ke khaane ke liye.","सलाद और तड़के के लिए।":"Salad aur tadke ke liye.","लाल और पके।":"Laal aur pake.","ताज़े पत्ते।":"Taaze patte.","पके केले।":"Pake kele.","तीखी हरी मिर्च।":"Teekhi hari mirch.","देसी लहसुन।":"Desi lahsun.","मौसमी गाजर।":"Mausmi gajar.","हरी और कोमल।":"Hari aur komal."};
+const buildD=()=>CATS.forEach((c,i)=>{D[c[0]+" "+c[1]]=c[0]+" "+CH[i]});
+const R=[[/^सिर्फ़ (\d+) kg बचा$/,"Sirf $1 kg bacha"],[/^(\d+) प्रोडक्ट$/,"$1 products"],[/^स्टॉक में सिर्फ़ (.+) है$/,"Stock mein sirf $1 hai"],
+[/^फ्री डिलीवरी पाने के लिए ₹(.+) की और खरीदारी करें।$/,"Free delivery ke liye ₹$1 ki aur kharidari karein."],[/^(.+) कार्ट में जोड़ा ✓$/,"$1 cart mein joda gaya ✓"],
+[/स्टॉक: /,"Stock: "],[/स्टॉक खत्म/,"Stock khatam"],[/\+ डिलीवरी/,"+ delivery"],[/^कम से कम 50 g चुनें$/,"Kam se kam 50 g chunein"],[/^यह प्रोडक्ट स्टॉक में नहीं है$/,"Yeh product stock mein nahi hai"],[/^(.+) की जानकारी$/,"$1 ki jaankari"]];
+function tr(s){if(D[s]!==undefined)return D[s];for(const[r,t]of R)if(r.test(s))return s.replace(r,t);return null}
+function applyLang(root){root=root||document.body;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+ while(n=w.nextNode()){if(n.parentNode.closest("script,style"))continue;if(n.__o===undefined)n.__o=n.nodeValue;const o=n.__o,t=o.trim();
+  if(lang=="hg"){const r=tr(t);n.nodeValue=r!=null?o.replace(t,r):o}else n.nodeValue=o}
+ (root.querySelectorAll?root.querySelectorAll("[placeholder],[aria-label]"):[]).forEach(el=>{el.__a=el.__a||{};["placeholder","aria-label"].forEach(a=>{if(!el.hasAttribute(a))return;if(el.__a[a]===undefined)el.__a[a]=el.getAttribute(a);const r=lang=="hg"?tr(el.__a[a]):null;el.setAttribute(a,r!=null?r:el.__a[a])})})}
+const T0=document.title;
+function setLang(l){lang=l;try{localStorage.setItem("rsb_lang",l)}catch(e){}document.documentElement.lang=l=="hg"?"hi-Latn":"hi";
+ document.title=l=="hg"?"Ravi Sabzi Bhandar – Taazi sabziyan, ghar tak | Gorakhpur":T0;$("#langb").textContent=l=="hg"?"हिंदी":"Hinglish";chips();render();cartUI();applyLang()}
+$("#langb").onclick=()=>setLang(lang=="hg"?"hi":"hg");
+{const wrap=f=>{const o=window[f];window[f]=function(...a){o.apply(this,a);applyLang()}};}
+const _r=render,_c=cartUI,_h=chips,_d=details;
+render=function(){_r();applyLang($("#grid").parentNode)};cartUI=function(){_c();applyLang($("#dr"))};chips=function(){_h();applyLang($("#cats").parentNode)};details=function(i){_d(i);applyLang($("#dlg"))};
+setLang(lang);
+const SB_URL="https://dcvkrmfrehbobckzabuw.supabase.co",SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjdmtybWZyZWhib2Jja3phYnV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2MTQzMjIsImV4cCI6MjEwNzE5MDMyMn0.SMwVpxNKlN9AAlBs5cqJdoitFUI5CNqde_BHJOxfQis";
+const pic=p=>p.img?`<img src="${p.img}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">`:p.e;
+const get=q=>fetch(SB_URL+"/rest/v1/"+q,{headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY}}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+async function load(){st="load";render();
+ try{const[c,p]=await Promise.all([get("categories?select=*&active=eq.true&order=sort"),get("products?select=*&active=eq.true&order=created_at.desc")]);
+  CATS=c.map(x=>[x.emoji||"🥬",x.name_hi]);CH=c.map(x=>x.name_hg||x.name_hi);HG={};
+  P=p.map(x=>{const ci=c.findIndex(k=>k.id==x.category_id);HG[x.id]=x.name_hg||x.name_hi;
+   return{id:x.id,hi:x.name_hi,en:x.name_en||"",e:ci>=0?CATS[ci][0]:"🥬",c:ci,p:+x.price_per_kg,o:x.original_price?+x.original_price:0,fresh:x.is_fresh,pop:x.is_popular,stock:x.in_stock?+x.stock_kg:0,d:x.description||"",img:x.image_path?SB_URL+"/storage/v1/object/public/product-images/"+x.image_path:""}});
+  buildD();st="ok";revalidate()}catch(e){st="err"}
+ cat=-1;setLang(lang)}
+load();
+</script>
+
+</body>
+</html>
